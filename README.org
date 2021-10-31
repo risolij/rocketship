@@ -5,3 +5,18 @@ What shall we build?
 #+begin_src rust
 println!("I don't know, but let's start!");
 #+end_src
+
+* Flakes
+** init
+   Initialize the flake in the =git= repo which will build the =flake.nix=
+   #+begin_src sh
+     nix flake init
+   #+end_src
+** edit your =flake.nix=
+   create your custom build inputs && outputs
+
+** nix develop
+   use =nix develop= to build the flake.lock file && create the dev environment.
+   #+begin_src sh
+     nix develop
+   #+end_src
