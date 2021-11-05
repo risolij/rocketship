@@ -29,7 +29,7 @@
 
 
           shellHook = ''
-            alias ls=exa
+            alias ls='exa --icons'
           '';
         };
       }
