@@ -2,17 +2,18 @@ use yew::prelude::*;
 
 
 enum Msg {
-    AddOne,
+    On,
+    Off,
 }
 
 
-struct Model {
+struct Nav {
     link: ComponentLink<Self>,
-    value: i64,
+    value: i8,
 }
 
 
-impl Component for Model {
+impl Component for Nav {
     type Message = Msg;
     type Properties = ();
 
@@ -27,10 +28,14 @@ impl Component for Model {
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
-            Msg::AddOne => {
+            Msg::On => {
                 self.value += 1;
                 true
-            }
+            },
+	        Msg::Off => {
+		        self.value -= 1;
+		        true
+	        },
         }
     }
 
@@ -42,24 +47,22 @@ impl Component for Model {
 
     fn view(&self) -> Html {
         html! {
-	    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+	    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">{ "Navbar" }</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
+		        
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">{ "Home" }<span class="sr-only"></span></a>
+                            <a class="nav-link" href="#">{ "home" }<span class="sr-only"></span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">{ "Features" }</a>
+                            <a class="nav-link" href="#">{ "github" }</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">{ "Pricing" }</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">{ "Disabled" }</a>
+                            <a class="nav-link" href="#">{ "projects" }</a>
                         </li>
                     </ul>
                 </div>
@@ -69,5 +72,5 @@ impl Component for Model {
 }
 
 fn main() {
-    yew::start_app::<Model>();
+    yew::start_app::<Nav>();
 }

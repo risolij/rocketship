@@ -1,34 +1,39 @@
 {
-  description = "wasm-pack setup";
+  description = "A devShell example";
 
   inputs = {
-    nixpkgs = { url = "github:nixos/nixpkgs/nixos-unstable"; };
-    rust-overlay = { url = "github:oxalica/rust-overlay"; };
+    nixpkgs.url      = "github:nixos/nixpkgs/nixos-unstable";
+    rust-overlay.url = "github:oxalica/rust-overlay";
+    flake-utils.url  = "github:numtide/flake-utils";
   };
 
-  outputs = { nixpkgs, rust-overlay, ... }:
-    let system = "x86_64-linux";
-    in {
-      devShell.${system} = let
+  outputs = { self, nixpkgs, rust-overlay, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        overlays = [ (import rust-overlay) ];
         pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ rust-overlay.overlay ];
+          inherit system overlays;
         };
-      in (({ pkgs, ... }:
-        pkgs.mkShell {
-          buildInputs = with pkgs; [
-            cargo
-            cargo-watch
-            nodejs
+      in
+      with pkgs;
+      {
+        devShell = mkShell {
+          buildInputs = [
             trunk
-            wasm-pack
-            (rust-bin.stable.latest.default.override {
-              extensions = [ "rust-src" ];
-              targets = [ "wasm32-unknown-unknown" ];
-            })
+            exa
+            (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
+              extensions = ["rust-src"];
+              targets = ["wasm32-unknown-unknown"];
+            }))
           ];
 
-          shellHook = "";
-        }) { pkgs = pkgs; });
-    };
+
+          shellHook = ''
+            alias ls=exa
+          '';
+        };
+      }
+    );
 }
+
+
