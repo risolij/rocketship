@@ -8,6 +8,7 @@ mod models;
 mod lib;
 
 
+use rocket::fs::FileServer;
 use rocket_dyn_templates::Template;
 use lib::shield_wall;
 
@@ -20,6 +21,7 @@ fn rocket() -> _ {
         .attach(shield)
         .attach(Template::fairing())
         .register("/", catchers![handlers::catchers::not_found])
+        .mount("/static", FileServer::from("static/"))
         .mount("/", routes![
             handlers::index::index,
             handlers::index::index_logged,
