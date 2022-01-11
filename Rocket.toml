@@ -1,0 +1,7 @@
+[default]
+log_level = "normal"
+ident = "nixd"
+
+
+[default.databases]
+## rocket_db = { url = "postgres://req@localhost/rocket" }
