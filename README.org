@@ -1,0 +1,12 @@
+* rocketship
+  Let's attempt to build a dashboard using the /Rocket/ framework that does something fun.  This project is for learning purposes only, and is not something that should be mimic'd as I'm sure most things are wrong :-D.
+  
+
+|-----------|
+| Utils     |
+|-----------|
+| rocket    |
+| postgres  |
+| nix       |
+| bootstrap |
+|-----------|
