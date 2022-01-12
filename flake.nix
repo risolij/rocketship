@@ -24,6 +24,8 @@
         devShell = mkShell {
           buildInputs = [
             pkg-config
+            jq
+            bat
             gcc
             openssl
             postgresql

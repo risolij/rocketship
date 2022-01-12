@@ -5,5 +5,4 @@ pub fn shield_wall() -> Shield {
     Shield::default()
         .enable(XssFilter::EnableBlock)
         .enable(Referrer::NoReferrer)
-
 }

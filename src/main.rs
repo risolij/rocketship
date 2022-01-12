@@ -8,14 +8,17 @@ mod models;
 mod lib;
 
 
+use crate::models::earthquake::Earthquake;
 use rocket::fs::FileServer;
 use rocket_dyn_templates::Template;
 use lib::shield_wall;
 
 
 #[launch]
-fn rocket() -> _ {
+async fn rocket() -> _ {
     let shield = shield_wall();
+    let mut earthquake = Earthquake::new();
+    earthquake.test_earthquake().await;
 
     rocket::build()
         .attach(shield)
