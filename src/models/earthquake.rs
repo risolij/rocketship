@@ -11,33 +11,6 @@ pub struct Earthquake {
 }
 
 
-impl Earthquake {
-    pub fn new() -> Self {
-        Self {
-            r#type: None,
-            metadata: None,
-            features: None,
-            bbox: None,
-        }
-    }
-    pub async fn test_earthquake(&mut self) {
-        self.request().await.unwrap();
-    }
-
-    pub async fn request(&mut self) -> Result<(), Box<dyn std::error::Error>> {
-        let resp = reqwest::get("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-30&minmagnitude=5")
-            .await?
-            .json::<Self>()
-            .await?;
-
-        println!("{:#?}", resp);
-
-        Ok(())
-
-    }
-}
-
-
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Metadata {
     generated: Option<i64>,
@@ -83,7 +56,8 @@ pub struct Properties {
     dmin: Option<f32>,
     rms: Option<f32>,
     gap: Option<i32>,
-    magType: Option<String>,
+    #[serde(rename = "camelCase")]
+    mag_type: Option<String>,
     r#type: Option<String>,
     title: Option<String>,
 }
