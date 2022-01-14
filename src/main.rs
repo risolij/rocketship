@@ -21,8 +21,8 @@ async fn rocket() -> _ {
 
     let mut query = QueryBuilder::new("2014-01-01", "2014-01-30", Some(5));
     let earthquake: Earthquake = query.build_quake().await.unwrap();
+    earthquake.get_props();
 
-    println!("{:#?}", earthquake);
 
     rocket::build()
         .attach(shield)

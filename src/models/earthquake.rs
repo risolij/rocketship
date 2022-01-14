@@ -11,6 +11,26 @@ pub struct Earthquake {
 }
 
 
+impl Earthquake {
+    pub fn get_props(&self) {
+        match &self.features {
+            Some(quake) => {
+                for q in quake {
+                    println!("{} - {} - {}", 
+                        q.properties.mag.unwrap(),
+                        q.properties.place.as_ref().unwrap(),
+                        q.properties.time.unwrap(),
+                    );
+                }
+            },
+            None => {
+                println!("No properties found");
+            }
+        }
+    }
+}
+
+
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Metadata {
     generated: Option<i64>,
