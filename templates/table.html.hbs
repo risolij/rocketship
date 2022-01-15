@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<h2>Section title</h2>
+<div class="table-responsive">
+  <table class="table table-borderless table-lg">
+    <thead>
+      <tr>
+        <th>mag</th>
+        <th>place</th>
+        <th>time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each quakes}}
+      <tr>
+        <td>{{this.properties.mag}}</td>
+        <td>{{this.properties.place}}</td>
+        <td>{{this.properties.time}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

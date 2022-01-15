@@ -8,8 +8,6 @@ mod models;
 mod lib;
 
 
-use crate::models::query_builder::QueryBuilder;
-use crate::models::earthquake::Earthquake;
 use rocket::fs::FileServer;
 use rocket_dyn_templates::Template;
 use lib::shield_wall;
@@ -18,11 +16,6 @@ use lib::shield_wall;
 #[launch]
 async fn rocket() -> _ {
     let shield = shield_wall();
-
-    let mut query = QueryBuilder::new("2014-01-01", "2014-01-30", Some(5));
-    let earthquake: Earthquake = query.build_quake().await.unwrap();
-    earthquake.get_props();
-
 
     rocket::build()
         .attach(shield)
