@@ -23,17 +23,24 @@ impl User {
         let hash = argon2::hash_encoded(password, salt, &config).unwrap();
 
         match self.validate_hash(&hash) {
-            true => {
-                self.password = hash;
-                println!("{}", self.password);
+            Ok(v) => {
+                match v {
+                    true => {
+                        self.password = hash;
+                        println!("{}", self.password)
+                    },
+                    false => {
+                        println!("Hashes don't match for some reason")
+                    }
+                }
             },
-            false => panic!("Something went wrong"),
+            Err(e) => println!("Error {}", e)
         }
     }
 
 
-    pub fn validate_hash(&mut self, hash: &String) -> bool {
-        argon2::verify_encoded(&hash, self.password.as_bytes()).unwrap()
+    pub fn validate_hash(&mut self, hash: &String) -> Result<bool, argon2::Error> {
+        argon2::verify_encoded(&hash, self.password.as_bytes())
     }
 }
 
