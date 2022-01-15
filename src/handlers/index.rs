@@ -1,19 +1,11 @@
 use rocket_dyn_templates::Template;
 use rocket::response::{Flash, Redirect};
 use rocket::http::CookieJar;
-use rocket::serde::{Serialize, Deserialize};
 
 use crate::models::user::AuthenticatedUser;
 use crate::models::query_builder::QueryBuilder;
 use crate::models::earthquake::Earthquake;
-use crate::models::earthquake::Quake;
-
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct IndexContext {
-    user: String,
-    quakes: Vec<Quake>,
-}
+use crate::models::context::IndexContext;
 
 
 #[get("/")]
