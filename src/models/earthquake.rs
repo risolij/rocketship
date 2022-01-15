@@ -1,35 +1,47 @@
-use rocket::serde::Serialize;
+use itertools::sorted;
+use itertools::Itertools;
 use rocket::serde::Deserialize;
-
+use rocket::serde::Serialize;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Earthquake {
-    r#type: Option<String>, 
+    r#type: Option<String>,
     metadata: Option<Metadata>,
     pub features: Option<Vec<Quake>>,
     bbox: Option<Vec<f64>>,
 }
-
 
 impl Earthquake {
     pub fn get_props(&self) {
         match &self.features {
             Some(quake) => {
                 for q in quake {
-                    println!("{} - {} - {}", 
+                    println!(
+                        "{} - {} - {}",
                         q.properties.mag.unwrap(),
                         q.properties.place.as_ref().unwrap(),
                         q.properties.time.unwrap(),
                     );
                 }
-            },
+            }
             None => {
                 println!("No properties found");
             }
         }
     }
-}
 
+    pub fn count(&self) -> Vec<f32> {
+        let mut counts = self
+            .features
+            .as_ref()
+            .unwrap()
+            .into_iter()
+            .map(|prop| prop.properties.mag.unwrap())
+            .collect::<Vec<f32>>();
+
+        counts.sort_by(|a, b| a.partial_cmp(b).unwrap())
+    }
+}
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Metadata {
@@ -38,9 +50,8 @@ pub struct Metadata {
     title: Option<String>,
     status: Option<i32>,
     api: Option<String>,
-    count: Option<i32>
+    count: Option<i32>,
 }
-
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Quake {
@@ -49,7 +60,6 @@ pub struct Quake {
     geometry: Geometry,
     id: Option<String>,
 }
-
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Properties {
@@ -81,7 +91,6 @@ pub struct Properties {
     pub r#type: Option<String>,
     pub title: Option<String>,
 }
-
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Geometry {
