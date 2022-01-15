@@ -14,7 +14,7 @@ use lib::shield_wall;
 
 
 #[launch]
-async fn rocket() -> _ {
+fn rocket() -> _ {
     let shield = shield_wall();
 
     rocket::build()
