@@ -32,13 +32,41 @@
             tree
             exa
             diesel-cli
+            postgresql_14
             (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
               extensions = ["rust-src"];
             }))
           ];
 
+          postgresConf =
+            writeText "postgresql.conf"
+            ''
+              # Settings
+              log_min_messages = warning
+              log_min_error_statement = error
+              log_min_duration_statement = 100  # ms
+              log_connections = on
+              log_disconnections = on
+              log_duration = on
+              #log_line_prefix = '[] '
+              log_timezone = 'UTC'
+              log_statement = 'all'
+              log_directory = 'pg_log'
+              log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
+              logging_collector = on
+              log_min_error_statement = error
+            '';
+
+          PGDATA = "/home/req/org/dev/rust/rocketship/.pg";
 
           shellHook = ''
+            echo "Using ${postgresql_14.name}."
+            export PGHOST="$PGDATA"
+            [ ! -d $PGDATA ] && pg_ctl initdb -o "-U postgres" && cat "$postgresConf" >> $PGDATA/postgresql.conf
+            pg_ctl -o "-p 5555 -k $PGDATA" start
+
+            alias fin="pg_ctl stop"
+            alias pg="psql -p 5555 -U postgres"
             alias ls='exa --icons'
             alias d='~/.cargo/bin/diesel'
           '';
