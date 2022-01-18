@@ -17,7 +17,7 @@ impl<'m> QueryBuilder<'m> {
     }
 
     fn build_query(&self) -> String {
-        let base = format!("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson");
+        let base = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson".to_string();
 
         match self.magnitude {
             Some(mag) => {

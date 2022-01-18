@@ -34,8 +34,8 @@ impl User {
         }
     }
 
-    pub fn validate_hash(&mut self, hash: &String) -> Result<bool, argon2::Error> {
-        argon2::verify_encoded(&hash, self.password.as_bytes())
+    pub fn validate_hash(&mut self, hash: &str) -> Result<bool, argon2::Error> {
+        argon2::verify_encoded(hash, self.password.as_bytes())
     }
 }
 

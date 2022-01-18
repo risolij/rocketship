@@ -30,16 +30,16 @@ impl Earthquake {
         }
     }
 
-    pub fn count(&self) -> Vec<f32> {
+    pub fn count(&self) {
         let mut counts = self
             .features
             .as_ref()
             .unwrap()
-            .into_iter()
+            .iter()
             .map(|prop| prop.properties.mag.unwrap())
             .collect::<Vec<f32>>();
 
-        counts.sort_by(|a, b| a.partial_cmp(b).unwrap())
+        println!("{:?}", counts.sort_by(|a, b| a.partial_cmp(b).unwrap()))
     }
 }
 
