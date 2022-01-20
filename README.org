@@ -6,13 +6,13 @@
      - average magnitude
      - something else?
   
-** Some tools involved
 
-|-----------|
-| Utils     |
-|-----------|
-| rocket    |
-| postgres  |
-| nix       |
-| bootstrap |
-|-----------|
+* Todo [0%]
+- [ ] Implement html form to allow custom query timeframes
+- [ ] Generate graph using =plotly.rs= on page load
+- [-] Setup postgres
+  - [X] configure =flake.nix= to allow postgres to be run
+  - [ ] configure database on container which custom user
+  - [ ] setup db connection in rocket
+- [ ] Sort data by date and/or by magnitude
+- [ ] figure out how to implement [[https://yew.rs][yew]] for frontend work? Rather than templating systems 
