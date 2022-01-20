@@ -5,4 +5,5 @@ use rocket::serde::{Deserialize, Serialize};
 pub struct IndexContext {
     pub user: String,
     pub quakes: Vec<Quake>,
+    pub count: usize,
 }

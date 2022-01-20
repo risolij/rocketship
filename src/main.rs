@@ -1,6 +1,7 @@
 #[macro_use]
 extern crate rocket;
 extern crate argon2;
+extern crate chrono;
 // #[macro_use] extern crate diesel;
 
 mod handlers;

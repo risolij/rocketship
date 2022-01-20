@@ -1,7 +1,6 @@
-use itertools::sorted;
-use itertools::Itertools;
 use rocket::serde::Deserialize;
 use rocket::serde::Serialize;
+use std::cmp::Ordering;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Earthquake {
@@ -12,35 +11,36 @@ pub struct Earthquake {
 }
 
 impl Earthquake {
-    pub fn get_props(&self) {
-        match &self.features {
-            Some(quake) => {
-                for q in quake {
-                    println!(
-                        "{} - {} - {}",
-                        q.properties.mag.unwrap(),
-                        q.properties.place.as_ref().unwrap(),
-                        q.properties.time.unwrap(),
-                    );
-                }
-            }
-            None => {
-                println!("No properties found");
-            }
-        }
+    pub fn count(&self) -> usize {
+        self.features.as_ref().unwrap().iter().count()
     }
 
-    pub fn count(&self) {
-        let mut counts = self
-            .features
-            .as_ref()
-            .unwrap()
-            .iter()
-            .map(|prop| prop.properties.mag.unwrap())
-            .collect::<Vec<f32>>();
+    //pub fn sort(&self) {
+    //    let items = self
+    //        .features
+    //        .as_ref()
+    //        .unwrap()
+    //        .iter()
+    //        .map(|p| p.properties.mag.unwrap())
+    //        .filter(|f| !f.is_nan())
+    //        .collect::<Vec<f32>>()
+    //        .sort_by(Earthquake::cmp_f32);
 
-        println!("{:?}", counts.sort_by(|a, b| a.partial_cmp(b).unwrap()))
-    }
+    //    println!("{:?}", items)
+
+    //}
+
+    //pub fn cmp_f32(a: &f32, b: &f32) -> Ordering {
+    //    if a < b {
+    //        return Ordering::Less;
+    //    }
+
+    //    if a < b {
+    //        return Ordering::Greater;
+    //    }
+
+    //    return Ordering::Equal;
+    //}
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -97,3 +97,21 @@ pub struct Geometry {
     r#type: Option<String>,
     coordinates: Vec<f64>,
 }
+
+//pub fn get_props(&self) {
+//    match &self.features {
+//        Some(quake) => {
+//            for q in quake {
+//                println!(
+//                    "{} - {} - {}",
+//                    q.properties.mag.unwrap(),
+//                    q.properties.place.as_ref().unwrap(),
+//                    q.properties.time.unwrap(),
+//                );
+//            }
+//        }
+//        None => {
+//            println!("No properties found");
+//        }
+//    }
+//}

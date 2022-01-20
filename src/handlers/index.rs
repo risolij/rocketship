@@ -9,9 +9,9 @@ use crate::models::user::AuthenticatedUser;
 
 #[get("/")]
 pub async fn index_logged(_user: AuthenticatedUser, jar: &CookieJar<'_>) -> Template {
-    let mut query = QueryBuilder::new("2014-01-01", "2014-01-30", Some(5));
+    let mut query = QueryBuilder::default(); //QueryBuilder::new("2014-01-01", "2014-01-30", Some(5));
     let earthquake: Earthquake = query.build_quake().await.unwrap();
-    let sorted_magnitudes = earthquake.count();
+    let counts = earthquake.count();
 
     let context = IndexContext {
         user: jar
@@ -19,6 +19,7 @@ pub async fn index_logged(_user: AuthenticatedUser, jar: &CookieJar<'_>) -> Temp
             .map(|cookie| cookie.value().to_string())
             .unwrap(),
         quakes: earthquake.features.unwrap(),
+        count: counts,
     };
 
     Template::render("index", &context)

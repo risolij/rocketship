@@ -42,3 +42,13 @@ impl<'m> QueryBuilder<'m> {
         Ok(resp)
     }
 }
+
+impl<'m> Default for QueryBuilder<'m> {
+    fn default() -> Self {
+        Self {
+            from: "2014-01-01",
+            to: "2014-01-30",
+            magnitude: Some(5),
+        }
+    }
+}
