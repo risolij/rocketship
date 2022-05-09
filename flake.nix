@@ -24,15 +24,12 @@
         devShell = mkShell {
           buildInputs = [
             pkg-config
-            jq
-            bat
             gcc
             openssl
             postgresql
-            tree
-            exa
             diesel-cli
             postgresql_14
+            rust-analyzer
             (rust-bin.selectLatestNightlyWith (toolchain: toolchain.default.override {
               extensions = ["rust-src"];
             }))
